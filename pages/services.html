@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخدمات - منزل لايف لكيشن</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>مرحباً بك</h1>
+                    <p>اختر نوع المستخدم: فني أو مشرف عام أو إدمن</p>
+                </div>
+                <form class="login-form" id="loginForm">
+                    <div class="user-type-selection">
+                        <div class="user-type-option">
+                            <input type="radio" id="admin" name="userType" value="admin" required>
+                            <label for="admin">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div class="user-type-text">
+                                    <h3>إدمن</h3>
+                                    <p>صلاحيات كاملة</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="user-type-option">
+                            <input type="radio" id="supervisor" name="userType" value="supervisor" required>
+                            <label for="supervisor">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="user-type-text">
+                                    <h3>مشرف عام</h3>
+                                    <p>إدارة المهام والموظفين</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="user-type-option">
+                            <input type="radio" id="technician" name="userType" value="technician" required>
+                            <label for="technician">
+                                <div class="user-type-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <div class="user-type-text">
+                                    <h3>فني</h3>
+                                    <p>تنفيذ المهام</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-user icon"></i>
+                            <input type="text" id="username" placeholder="اسم المستخدم" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock icon"></i>
+                            <input type="password" id="password" placeholder="كلمة المرور" required>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>تذكرني</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="login-btn">تسجيل الدخول</button>
+                </form>
+
+                <div class="accounts-list">
+                    <h3>حسابات المشرفين:</h3>
+                    <ul>
+                        <li>
+                            <strong>المشرف العام:</strong><br>
+                            اسم المستخدم: its_mohammed<br>
+                            كلمة المرور: 4430421
+                        </li>
+                        <li>
+                            <strong>الإدمن:</strong><br>
+                            اسم المستخدم: admin<br>
+                            كلمة المرور: admin123
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة التطبيق الرئيسية -->
+    <div id="appScreen" class="screen hidden">
+        <!-- شريط التنقل العلوي -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <h2>الخدمات</h2>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/user-avatar.png" alt="صورة المستخدم">
+                    <span id="userName">اسم المستخدم</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>linko-ftth</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.html" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tasks.html" data-page="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>المهام</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="house.html" data-page="house">
+                        <i class="fas fa-building"></i>
+                        <span>منزل لايف لكيشن</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات والتقارير</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- محتوى التطبيق -->
+        <main class="main-content">
+            <!-- صفحة الخدمات -->
+            <div id="servicesPage" class="page active">
+                <div class="page-header">
+                    <h1>الخدمات المتاحة</h1>
+                    <div class="page-actions">
+                        <button class="btn" id="addServiceBtn"><i class="fas fa-plus"></i> إضافة خدمة</button>
+                        <button class="btn primary" id="exportServicesBtn"><i class="fas fa-file-export"></i> تصدير البيانات</button>
+                    </div>
+                </div>
+
+                <!-- قسم الخدمات الرئيسية -->
+                <div class="services-container">
+                    <!-- خدمة إنزال البور -->
+                    <div class="service-box">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-dumpster"></i>
+                            </div>
+                            <h2>إنزال البور</h2>
+                        </div>
+                        <div class="service-content">
+                            <p>خدمات متخصصة في إنزال البور وإدارة النفايات والمواد الثقيلة في العقارات</p>
+
+                            <div class="service-form">
+                                <h3>طلب خدمة إنزال البور</h3>
+                                <form id="dumpsterForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="dumpsterDate">التاريخ المطلوب</label>
+                                            <input type="date" id="dumpsterDate" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dumpsterTime">الوقت المطلوب</label>
+                                            <input type="time" id="dumpsterTime" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dumpsterType">نوع البور</label>
+                                        <select id="dumpsterType" required>
+                                            <option value="">اختر النوع</option>
+                                            <option value="building">مواد بناء</option>
+                                            <option value="demolition">نفايات هدم</option>
+                                            <option value="furniture">أثاث</option>
+                                            <option value="general">نفايات عامة</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dumpsterLocation">موقع البور</label>
+                                        <input type="text" id="dumpsterLocation" placeholder="أدخل موقع البور" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dumpsterWeight">الوزن التقديري</label>
+                                        <input type="number" id="dumpsterWeight" placeholder="كيلوجرام" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dumpsterNotes">ملاحظات إضافية</label>
+                                        <textarea id="dumpsterNotes" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn primary">إرسال الطلب</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- خدمة إعداد الراوتر -->
+                    <div class="service-box">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <h2>إعداد الراوتر</h2>
+                        </div>
+                        <div class="service-content">
+                            <p>خدمات متخصصة في إعداد الراوتر والبرمجة والتنصيب الجديد أو القطع</p>
+
+                            <div class="service-tabs">
+                                <div class="tabs-nav">
+                                    <button class="tab-btn active" data-tab="setup">إعداد وتنصيب</button>
+                                    <button class="tab-btn" data-tab="programming">برمجة وتكوين</button>
+                                    <button class="tab-btn" data-tab="cutting">قطع الخدمة</button>
+                                </div>
+
+                                <!-- تبويب إعداد وتنصيب -->
+                                <div class="tab-content active" id="setup-tab">
+                                    <form id="routerSetupForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="routerType">نوع الراوتر</label>
+                                                <select id="routerType" required>
+                                                    <option value="">اختر النوع</option>
+                                                    <option value="home">راوتر منزلي</option>
+                                                    <option value="business">راوتر تجاري</option>
+                                                    <option value="industrial">راوتر صناعي</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="setupDate">التاريخ المطلوب</label>
+                                                <input type="date" id="setupDate" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="setupLocation">موقع التركيب</label>
+                                            <input type="text" id="setupLocation" placeholder="أدخل موقع التركيب" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="setupNotes">ملاحظات إضافية</label>
+                                            <textarea id="setupNotes" rows="3"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn primary">إرسال الطلب</button>
+                                    </form>
+                                </div>
+
+                                <!-- تبويب برمجة وتكوين -->
+                                <div class="tab-content" id="programming-tab">
+                                    <form id="routerProgrammingForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="programmingType">نوع البرمجة</label>
+                                                <select id="programmingType" required>
+                                                    <option value="">اختر النوع</option>
+                                                    <option value="wifi">إعداد شبكة الواي فاي</option>
+                                                    <option value="security">إعداد الأمان</option>
+                                                    <option value="guest">شبكة ضيوف</option>
+                                                    <option value="parental">التحكم الأبوي</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="programmingDate">التاريخ المطلوب</label>
+                                                <input type="date" id="programmingDate" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="routerSSID">اسم الشبكة (SSID)</label>
+                                            <input type="text" id="routerSSID" placeholder="أدخل اسم الشبكة">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="routerPassword">كلمة المرور</label>
+                                            <input type="password" id="routerPassword" placeholder="أدخل كلمة المرور">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="programmingNotes">ملاحظات إضافية</label>
+                                            <textarea id="programmingNotes" rows="3"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn primary">إرسال الطلب</button>
+                                    </form>
+                                </div>
+
+                                <!-- تبويب قطع الخدمة -->
+                                <div class="tab-content" id="cutting-tab">
+                                    <form id="routerCuttingForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="cuttingDate">التاريخ المطلوب</label>
+                                                <input type="date" id="cuttingDate" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cuttingReason">سبب القطع</label>
+                                                <select id="cuttingReason" required>
+                                                    <option value="">اختر السبب</option>
+                                                    <option value="travel">سفر</option>
+                                                    <option value="financial">أسباب مالية</option>
+                                                    <option value="temporary">قطع مؤقت</option>
+                                                    <option value="other">أسباب أخرى</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="customerInfo">معلومات العميل</label>
+                                            <div class="customer-info-box">
+                                                <div class="info-row">
+                                                    <div class="info-item">
+                                                        <label>الاسم الكامل</label>
+                                                        <input type="text" id="customerName" required>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <label>رقم الهاتف</label>
+                                                        <input type="tel" id="customerPhone" required>
+                                                    </div>
+                                                </div>
+                                                <div class="info-row">
+                                                    <div class="info-item">
+                                                        <label>المنطقة</label>
+                                                        <input type="text" id="customerArea" required>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <label>العنوان التفصيلي</label>
+                                                        <input type="text" id="customerAddress" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cuttingNotes">ملاحظات إضافية</label>
+                                            <textarea id="cuttingNotes" rows="3"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn primary">إرسال الطلب</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- خدمة إدارة المشتركين -->
+                    <div class="service-box">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h2>إدارة المشتركين</h2>
+                        </div>
+                        <div class="service-content">
+                            <p>إدارة قاعدة بيانات المشتركين مع متابعة الاشتراكات والمدفوعات</p>
+
+                            <div class="subscribers-section">
+                                <div class="section-header">
+                                    <h3>قائمة المشتركين</h3>
+                                    <button class="btn primary" id="addSubscriberBtn"><i class="fas fa-plus"></i> إضافة مشترك</button>
+                                </div>
+
+                                <!-- جدول المشتركين -->
+                                <div class="subscribers-table-container">
+                                    <table class="subscribers-table">
+                                        <thead>
+                                            <tr>
+                                                <th>الاسم الكامل</th>
+                                                <th>رقم الهاتف</th>
+                                                <th>المنطقة</th>
+                                                <th>تاريخ الاشتراك</th>
+                                                <th>حالة الاشتراك</th>
+                                                <th>الإجراءات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="subscribersTableBody">
+                                            <!-- سيتم ملء هذا الجدول ديناميكيًا -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- نموذج إضافة/تعديل المشترك -->
+                            <div class="subscriber-form-modal hidden" id="subscriberFormModal">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 id="subscriberFormTitle">إضافة مشترك جديد</h2>
+                                        <button class="close-modal" id="closeSubscriberModal">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <form id="subscriberForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="subscriberName">الاسم الكامل</label>
+                                                <input type="text" id="subscriberName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="subscriberPhone">رقم الهاتف</label>
+                                                <input type="tel" id="subscriberPhone" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="subscriberArea">المنطقة</label>
+                                                <input type="text" id="subscriberArea" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="subscriberSubscriptionDate">تاريخ الاشتراك</label>
+                                                <input type="date" id="subscriberSubscriptionDate" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subscriberStatus">حالة الاشتراك</label>
+                                            <select id="subscriberStatus" required>
+                                                <option value="active">نشط</option>
+                                                <option value="inactive">غير نشط</option>
+                                                <option value="suspended">معلق</option>
+                                                <option value="expired">منتهي</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subscriberNotes">ملاحظات</label>
+                                            <textarea id="subscriberNotes" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn primary">حفظ البيانات</button>
+                                            <button type="button" class="btn" id="cancelSubscriberForm">إلغاء</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="../js/services.js"></script>
+</body>
+</html>

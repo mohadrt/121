@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منزل لايف لكيشن - مدير المهام</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>مرحباً بك</h1>
+                    <p>تسجيل الدخول إلى حسابك</p>
+                </div>
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-user icon"></i>
+                            <input type="text" id="username" placeholder="اسم المستخدم" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock icon"></i>
+                            <input type="password" id="password" placeholder="كلمة المرور" required>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>تذكرني</span>
+                        </label>
+                        <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+                    <button type="submit" class="login-btn">تسجيل الدخول</button>
+                    <div class="login-footer">
+                        <p>ليس لديك حساب؟ <a href="#" id="showRegister">سجل الآن</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة التطبيق الرئيسية -->
+    <div id="appScreen" class="screen hidden">
+        <!-- شريط التنقل العلوي -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <h2>منزل لايف لكيشن</h2>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/user-avatar.png" alt="صورة المستخدم">
+                    <span id="userName">اسم المستخدم</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>منزل لايف لكيشن</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.html" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tasks.html" data-page="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>المهام</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#" data-page="house">
+                        <i class="fas fa-building"></i>
+                        <span>منزل لايف لكيشن</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات والتقارير</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- محتوى التطبيق -->
+        <main class="main-content">
+            <!-- صفحة منزل لايف لكيشن -->
+            <div id="housePage" class="page active">
+                <div class="page-header">
+                    <h1>منزل لايف لكيشن</h1>
+                    <div class="page-actions">
+                        <button class="btn" id="addHouseBtn"><i class="fas fa-plus"></i> إضافة منزل</button>
+                        <button class="btn primary" id="exportHouseDataBtn"><i class="fas fa-file-export"></i> تصدير البيانات</button>
+                    </div>
+                </div>
+
+                <!-- معلومات المنزل -->
+                <div class="house-info">
+                    <div class="house-header">
+                        <h2>عقار لايف لكيشن</h2>
+                        <div class="house-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5</span>
+                        </div>
+                    </div>
+                    <div class="house-details">
+                        <div class="house-image">
+                            <img src="../images/house-main.jpg" alt="صورة المنزل الرئيسية">
+                        </div>
+                        <div class="house-description">
+                            <h3>وصف المنزل</h3>
+                            <p>عقار راقي يقع في موقع استراتيجي يضم جميع وسائل الراحة والخدمات. يتكون من غرف واسعة ومصممة بذوق عالي، مع مساحات خضراء ومسابح متنوعة.</p>
+                            <div class="house-features">
+                                <div class="feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>4 غرف نوم</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>3 حمامات</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>350 متر مربع</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-car"></i>
+                                    <span>موقف سيارات</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم المرافق -->
+                <div class="house-facilities">
+                    <h3>المرافق والخدمات</h3>
+                    <div class="facilities-grid">
+                        <div class="facility-card">
+                            <div class="facility-icon">
+                                <i class="fas fa-swimming-pool"></i>
+                            </div>
+                            <h4>حمام سباحة</h4>
+                            <p>حمام سباحة كبير مع منطقة استرخاء</p>
+                        </div>
+                        <div class="facility-card">
+                            <div class="facility-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <h4>نادي رياضي</h4>
+                            <p>مجهز بأحدث الأجهزة الرياضية</p>
+                        </div>
+                        <div class="facility-card">
+                            <div class="facility-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4>حدائق خضراء</h4>
+                            <p>مساحات خضراء واسعة للمشي والاستمتاع</p>
+                        </div>
+                        <div class="facility-card">
+                            <div class="facility-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4>أنظمة أمان</h4>
+                            <p>أنظمة أمان متقدمة على مدار 24 ساعة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم خدمات الصيانة -->
+                <div class="maintenance-services">
+                    <h3>خدمات الصيانة المتاحة</h3>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-hammer"></i>
+                            </div>
+                            <h4>قطع وتكسير</h4>
+                            <p>خدمات قطع وتكسير احترافية للأسطح والجدران</p>
+                            <div class="service-details">
+                                <ul>
+                                    <li>قطع الخرسانة</li>
+                                    <li>تكسير الجدران</li>
+                                    <li>إزالة الأرضيات</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-dumpster"></i>
+                            </div>
+                            <h4>إنزال البور</h4>
+                            <p>خدمات إنزال البور والنفايات المهنية</p>
+                            <div class="service-details">
+                                <ul>
+                                    <li>إنزال مواد البناء</li>
+                                    <li>إزالة النفايات</li>
+                                    <li>نقل المواد الثقيلة</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-paint-roller"></i>
+                            </div>
+                            <h4>دهان وتزيين</h4>
+                            <p>خدمات دهان وتزيين عالية الجودة</p>
+                            <div class="service-details">
+                                <ul>
+                                    <li>دهان الجدران</li>
+                                    <li>تزيين الأسقف</li>
+                                    <li>طلاء الواجهات</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-plumbing"></i>
+                            </div>
+                            <h4>سباكة وتنظيف</h4>
+                            <p>خدمات سباكة وتنظيف متكاملة</p>
+                            <div class="service-details">
+                                <ul>
+                                    <li>تغيير الأنابيب</li>
+                                    <li>صيانة السباكة</li>
+                                    <li>تنظيف المنظفات</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم أنواع المهام -->
+                <div class="task-types">
+                    <h3>أنواع المهام المتاحة</h3>
+                    <div class="task-types-grid">
+                        <div class="task-type-card urgent">
+                            <div class="task-type-header">
+                                <h4>مهام ضرورية جداً</h4>
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <ul>
+                                <li>إصلاح أعطال الكهرباء</li>
+                                <li>إصلاح تسربات المياه</li>
+                                <li>إخلاء المبنى لأسباب أمنية</li>
+                                <li>إصلاح أعطال نظام التدفئة</li>
+                            </ul>
+                        </div>
+                        <div class="task-type-card important">
+                            <div class="task-type-header">
+                                <h4>مهام ضرورية</h4>
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <ul>
+                                <li>صيانة الأجهزة الكهربائية</li>
+                                <li>تنظيف النوافذ والأبواب</li>
+                                <li>إصلاح الأثاث التالف</li>
+                                <li>تغيير الإضاءة المعطلة</li>
+                            </ul>
+                        </div>
+                        <div class="task-type-card normal">
+                            <div class="task-type-header">
+                                <h4>مهام عادية</h4>
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <ul>
+                                <li>تغيير الديكورات</li>
+                                <li>تغيير أغطية الأثاث</li>
+                                <li>تنظيف الأرضيات</li>
+                                <li>زراعة النباتات</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم الصيانة المجدولة -->
+                <div class="scheduled-maintenance">
+                    <h3>الصيانة المجدولة</h3>
+                    <div class="maintenance-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>نوع الصيانة</th>
+                                    <th>الفريق المسؤول</th>
+                                    <th>الحالة</th>
+                                    <th>ملاحظات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2023-11-15</td>
+                                    <td>صيانة نظام التكييف</td>
+                                    <td>الفريق 1</td>
+                                    <td><span class="status completed">منجز</span></td>
+                                    <td>تم استبدال الفلتر وتنظيف الوحدات</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-11-20</td>
+                                    <td>صيانة السباكة</td>
+                                    <td>الفريق 2</td>
+                                    <td><span class="status in-progress">قيد التنفيذ</span></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-11-25</td>
+                                    <td>دهان الجدران الداخلية</td>
+                                    <td>الفريق 3</td>
+                                    <td><span class="status pending">مجدول</span></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- قسم الصور -->
+                <div class="house-gallery">
+                    <h3>صور المنزل</h3>
+                    <div class="gallery-grid">
+                        <div class="gallery-item large">
+                            <img src="../images/house-1.jpg" alt="صورة المنزل 1">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../images/house-2.jpg" alt="صورة المنزل 2">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../images/house-3.jpg" alt="صورة المنزل 3">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../images/house-4.jpg" alt="صورة المنزل 4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم الخرائط -->
+                <div class="house-location">
+                    <h3>الموقع</h3>
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>خريطه العقار</p>
+                            <button class="btn primary">عرض الخريطة الكاملة</button>
+                        </div>
+                    </div>
+                    <div class="location-details">
+                        <div class="location-info">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>العنوان</h4>
+                                    <p>شارع الملك فهد، حي النخيل، الرياض</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>ساعات العمل</h4>
+                                    <p>الإثنين - السبت: 9 ص - 6 م</p>
+                                    <p>الأحد: 10 ص - 4 م</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>رقم الهاتف</h4>
+                                    <p>920004433</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم المراجعات -->
+                <div class="house-reviews">
+                    <h3>مراجعات العملاء</h3>
+                    <div class="reviews-container">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <img src="../images/user1.jpg" alt="صورة المراجع">
+                                    <div>
+                                        <h4>أحمد محمد</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="review-date">2023-10-20</span>
+                            </div>
+                            <p class="review-text">خدمة ممتازة والمنزل نظيف ومنظم. الموظفون محترفون وودودون.</p>
+                        </div>
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <img src="../images/user2.jpg" alt="صورة المراجع">
+                                    <div>
+                                        <h4>فاطمة علي</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="review-date">2023-10-15</span>
+                            </div>
+                            <p class="review-text">جودة عالية في الخدمات والصيانة. موقع العقار ممتاز.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم الاتصال -->
+                <div class="house-contact">
+                    <h3>تواصل معنا</h3>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">الاسم</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">البريد الإلكتروني</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">رقم الهاتف</label>
+                                <input type="tel" id="contactPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">الرسالة</label>
+                                <textarea id="contactMessage" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn primary">إرسال الرسالة</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة إضافة منزل -->
+    <div id="addHouseModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة منزل جديد</h2>
+                <button class="close-modal" id="closeAddHouseModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addHouseForm">
+                <div class="form-group">
+                    <label for="houseName">اسم المنزل</label>
+                    <input type="text" id="houseName" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseAddress">العنوان</label>
+                    <input type="text" id="houseAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseArea">المساحة (متر مربع)</label>
+                    <input type="number" id="houseArea" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseRooms">عدد الغرف</label>
+                    <input type="number" id="houseRooms" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseBathrooms">عدد الحمامات</label>
+                    <input type="number" id="houseBathrooms" required>
+                </div>
+                <div class="form-group">
+                    <label for="houseDescription">وصف المنزل</label>
+                    <textarea id="houseDescription" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn primary">إضافة المنزل</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/tasks.js"></script>
+    <script>
+        // تهيء الواجهة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة حدث لزر إضافة منزل
+            document.getElementById('addHouseBtn').addEventListener('click', function() {
+                document.getElementById('addHouseModal').classList.remove('hidden');
+            });
+
+            // إضافة حدث لإغلاق نافذة إضافة منزل
+            document.getElementById('closeAddHouseModal').addEventListener('click', function() {
+                document.getElementById('addHouseModal').classList.add('hidden');
+            });
+
+            // إضافة حدث لنموذج الاتصال
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.');
+                this.reset();
+            });
+
+            // إضافة حدث لنموذج إضافة منزل
+            document.getElementById('addHouseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم إضافة المنزل بنجاح.');
+                document.getElementById('addHouseModal').classList.add('hidden');
+                this.reset();
+            });
+
+            // إضافة حدث لزر تصدير البيانات
+            document.getElementById('exportHouseDataBtn').addEventListener('click', function() {
+                alert('سيتم تصدير البيانات قريباً.');
+            });
+        });
+    </script>
+</body>
+</html>

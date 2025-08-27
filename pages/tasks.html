@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>linko-ftth - إدارة المهام</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ======== تحسينات صفحة تسجيل الدخول ======== */
+        .login-container {
+            max-width: 500px;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .login-box {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-hover);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .login-header {
+            padding: 40px 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: var(--box-shadow);
+            animation: pulse 2s infinite;
+        }
+
+        .logo-icon {
+            font-size: 40px;
+            color: white;
+        }
+
+        .login-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            color: var(--gray-color);
+            font-size: 18px;
+        }
+
+        .login-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            position: absolute;
+            right: 15px;
+            color: var(--gray-color);
+            z-index: 1;
+            font-size: 18px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e1e5f2;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: #f8f9ff;
+        }
+
+        .input-container input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            background-color: white;
+        }
+
+        .input-container input:hover {
+            border-color: #c6d0f5;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: var(--gray-color);
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: var(--secondary-color);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .login-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        .admin-info {
+            text-align: center;
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            margin-top: 10px;
+            background-color: #f8f9ff;
+        }
+
+        .admin-info p {
+            color: var(--gray-color);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .admin-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .features-list {
+            text-align: right;
+            padding: 0 20px;
+        }
+
+        .features-list li {
+            margin-bottom: 8px;
+            color: var(--gray-color);
+        }
+
+        .features-list li i {
+            color: var(--success-color);
+            margin-left: 5px;
+        }
+ 
+        /* ======== الرسوم المتحركة ======== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(67, 97, 238, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(50, 50);
+                opacity: 0;
+            }
+        }
+
+        /* ======== رسائل الإشعارات ======== */
+        .message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 500;
+            z-index: 2000;
+            animation: slideInMessage 0.3s ease-out, fadeOut 0.5s ease-out 2.5s forwards;
+            box-shadow: var(--box-shadow);
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+
+        .message.info {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+ 
+        /* ======== تحسينات لوحة التحكم ======== */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow-hover);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .dashboard-header h1 {
+            position: relative;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .dashboard-header p {
+            position: relative;
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+        
+        .stat-card.blue::before {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .stat-card.green::before {
+            background: linear-gradient(90deg, var(--success-color), #3a86ff);
+        }
+        
+        .stat-card.yellow::before {
+            background: linear-gradient(90deg, var(--warning-color), #ff9e00);
+        }
+        
+        .stat-card.red::before {
+            background: linear-gradient(90deg, var(--danger-color), #ff0054);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+            font-size: 28px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .stat-icon.blue {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(67, 97, 238, 0.05));
+            color: var(--primary-color);
+        }
+        
+        .stat-icon.green {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.15), rgba(76, 201, 240, 0.05));
+            color: var(--success-color);
+        }
+        
+        .stat-icon.yellow {
+            background: linear-gradient(135deg, rgba(247, 127, 0, 0.15), rgba(247, 127, 0, 0.05));
+            color: var(--warning-color);
+        }
+        
+        .stat-icon.red {
+            background: linear-gradient(135deg, rgba(214, 40, 40, 0.15), rgba(214, 40, 40, 0.05));
+            color: var(--danger-color);
+        }
+        
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .stat-info p {
+            color: var(--gray-color);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .recent-tasks {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .recent-tasks h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .tasks-table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .tasks-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .tasks-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .tasks-table th {
+            padding: 15px 20px;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .tasks-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tasks-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .tasks-table tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .task-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .task-type.critical {
+            background-color: rgba(214, 40, 40, 0.15);
+            color: var(--danger-color);
+        }
+        
+        .task-type.important {
+            background-color: rgba(247, 127, 0, 0.15);
+            color: var(--warning-color);
+        }
+        
+        .task-type.normal {
+            background-color: rgba(76, 201, 240, 0.15);
+            color: var(--success-color);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status.received {
+            background-color: rgba(67, 97, 238, 0.15);
+            color: var(--primary-color);
+        }
+        
+        .status.in-progress {
+            background-color: rgba(247, 127, 0, 0.15);
+            color: var(--warning-color);
+        }
+        
+        .status.completed {
+            background-color: rgba(76, 201, 240, 0.15);
+            color: var(--success-color);
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 3px;
+        }
+        
+        .btn-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .teams-tasks {
+            margin-top: 30px;
+        }
+        
+        .teams-tasks h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .teams-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .team-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .team-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+        }
+        
+        .team-header h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .team-stats {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-item i {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .team-tasks {
+            padding: 20px;
+        }
+        
+        .team-task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .team-task:last-child {
+            border-bottom: none;
+        }
+        
+        .task-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .task-info p {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+ 
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-user-shield logo-icon"></i>
+                    </div>
+                    <h1>مشرف النظام</h1>
+                    <p>تسجيل دخول المشرف العام</p>
+                </div>
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-user icon"></i>
+                            <input type="text" id="username" placeholder="اسم المستخدم" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock icon"></i>
+                            <input type="password" id="password" placeholder="كلمة المرور" required>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>تذكرني</span>
+                        </label>
+                        <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+                    <button type="submit" class="login-btn">تسجيل الدخول</button>
+                </form>
+                <div class="admin-info">
+                    <h3>نظام إدارة الفريق</h3>
+                    <p>بصفتك مشرف عام، يمكنك:</p>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> إضافة وحذف الفنيين</li>
+                        <li><i class="fas fa-check-circle"></i> إضافة وحذف المشرفين</li>
+                        <li><i class="fas fa-check-circle"></i> تعيين المهام للفريق</li>
+                        <li><i class="fas fa-check-circle"></i> مراقبة تقدم المهام</li>
+                        <li><i class="fas fa-check-circle"></i> إنشاء تقارير الأداء</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة التطبيق الرئيسية -->
+    <div id="appScreen" class="screen hidden">
+        <!-- شريط التنقل العلوي -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <h2>linko-ftth</h2>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/user-avatar.png" alt="صورة المستخدم">
+                    <span id="userName">اسم المستخدم</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>linko-ftth</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.html" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#" data-page="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>المهام</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="design-preview.html" data-page="preview">
+                        <i class="fas fa-eye"></i>
+                        <span>معاينة النظام</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات والتقارير</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- محتوى التطبيق -->
+        <main class="main-content">
+            <!-- صفحة المهام -->
+            <div id="tasksPage" class="page active">
+                <div class="dashboard-header">
+                    <h1>لوحة التحكم الرئيسية</h1>
+                    <p>مرحباً بك في نظام linko-ftth لإدارة الفرق. من هنا يمكنك متابعة جميع المهام والمشاريع.</p>
+                </div>
+                
+                <div class="page-header">
+                    <h1>المهام</h1>
+                    <div class="page-actions">
+                        <button class="btn" id="exportTasksBtn"><i class="fas fa-file-export"></i> تصدير التقارير</button>
+                        <button class="btn primary" id="createTaskBtn"><i class="fas fa-plus"></i> مهمة جديدة</button>
+                    </div>
+                </div>
+
+                <!-- فلتر المهام -->
+                <div class="tasks-filters">
+                    <div class="filter-group">
+                        <label>نوع المهمة:</label>
+                        <select id="taskTypeFilter">
+                            <option value="all">الكل</option>
+                            <option value="critical">ضروري جداً</option>
+                            <option value="important">ضروري</option>
+                            <option value="normal">عادي</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الحالة:</label>
+                        <select id="taskStatusFilter">
+                            <option value="all">الكل</option>
+                            <option value="received">تم الاستلام</option>
+                            <option value="in-progress">قيد التنفيذ</option>
+                            <option value="completed">منجز</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الفريق:</label>
+                        <select id="teamFilter">
+                            <option value="all">الكل</option>
+                            <option value="team1">الفريق 1</option>
+                            <option value="team2">الفريق 2</option>
+                            <option value="team3">الفريق 3</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>اسم المشترك:</label>
+                        <input type="text" id="subscriberNameFilter" placeholder="ابحث باسم المشترك">
+                    </div>
+                    <div class="filter-group">
+                        <label>رقم الهاتف:</label>
+                        <input type="text" id="subscriberPhoneFilter" placeholder="ابحث برقم الهاتف">
+                    </div>
+                    <div class="filter-group">
+                        <label>العمود/الشارع:</label>
+                        <input type="text" id="subscriberColumnFilter" placeholder="ابحث بالعمود/الشارع">
+                    </div>
+                    <div class="filter-group">
+                        <label>المنطقة/الحي:</label>
+                        <input type="text" id="subscriberZoneFilter" placeholder="ابحث بالمنطقة/الحي">
+                    </div>
+                </div>
+
+                <!-- إحصائيات المهام -->
+                <div class="stats-container">
+                    <div class="stat-card blue">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalTasksCount">24</h3>
+                            <p>إجمالي المهام</p>
+                        </div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon green">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedTasksCount">18</h3>
+                            <p>المهام المكتملة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card yellow">
+                        <div class="stat-icon yellow">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="inProgressTasksCount">4</h3>
+                            <p>المهام قيد التنفيذ</p>
+                        </div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-icon red">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="receivedTasksCount">2</h3>
+                            <p>المهام المعلقة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- جدول المهام -->
+                <div class="tasks-table-container">
+                    <div class="table-responsive">
+                        <table class="tasks-table">
+                            <thead>
+                                <tr>
+                                    <th>المهمة</th>
+                                    <th>نوع الجهاز</th>
+                                    <th>الأولوية</th>
+                                    <th>الفريق</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasksTableBody">
+                                <!-- سيتم ملء هذا الجدول ديناميكيًا باستخدام JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- المهام حسب الفريق -->
+                <div class="teams-tasks">
+                    <h3>المهام حسب الفريق</h3>
+                    <div class="teams-container">
+                        <!-- سيتم ملء هذا القسم ديناميكيًا باستخدام JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة إنشاء المهمة -->
+    <div id="createTaskModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إنشاء مهمة صيانة جديدة</h2>
+                <button class="close-modal" id="closeCreateTaskModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="createTaskForm">
+                <div class="form-group">
+                    <label for="taskTitle">عنوان المهمة</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">وصف المشكلة</label>
+                    <textarea id="taskDescription" rows="4" placeholder="وصف تفصيلي للمشكلة"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDevice">نوع الجهاز</label>
+                    <select id="taskDevice" required>
+                        <option value="">اختر نوع الجهاز</option>
+                        <option value="router">راوتر</option>
+                        <option value="switch">محول</option>
+                        <option value="server">خادم</option>
+                        <option value="firewall">جدار ناري</option>
+                        <option value="wireless">شبكة لاسلكية</option>
+                        <option value="fiber">ألياف ضوئية</option>
+                        <option value="other">جهاز آخر</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskLocation">الموقع/القسم</label>
+                    <input type="text" id="taskLocation" placeholder="مثال: الطابق الأول - قسم المبيعات">
+                </div>
+                <div class="form-group">
+                    <label for="taskType">نوع المهمة</label>
+                    <select id="taskType" required>
+                        <option value="maintenance">صيانة روتينية</option>
+                        <option value="troubleshooting">حل مشكلة</option>
+                        <option value="installation">تركيب</option>
+                        <option value="upgrade">تحديث</option>
+                        <option value="configuration">إعدادات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriority">الأولوية</label>
+                    <select id="taskPriority" required>
+                        <option value="low">منخفضة</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="high">عالية</option>
+                        <option value="critical">حرجة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskTeam">الفريق المسؤول</label>
+                    <select id="taskTeam" required>
+                        <option value="team1">الفريق 1</option>
+                        <option value="team2">الفريق 2</option>
+                        <option value="team3">الفريق 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskDeadline">الموعد النهائي</label>
+                    <input type="date" id="taskDeadline" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskEstimatedTime">الوقت المقدر للإنجاز (بالساعات)</label>
+                    <input type="number" id="taskEstimatedTime" min="1" max="168" placeholder="مثال: 2">
+                </div>
+                <div class="form-group">
+                    <label for="taskTools">الأدوات/القطع المطلوبة</label>
+                    <textarea id="taskTools" rows="2" placeholder="مثال: كابلات، محولات، أدوات تشخيص"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="subscriberName">اسم المشترك</label>
+                    <input type="text" id="subscriberName" placeholder="اسم المشترك">
+                </div>
+                <div class="form-group">
+                    <label for="subscriberPhone">رقم هاتف المشترك</label>
+                    <input type="text" id="subscriberPhone" placeholder="رقم هاتف المشترك">
+                </div>
+                <div class="form-group">
+                    <label for="subscriberColumn">العمود/الشارع</label>
+                    <input type="text" id="subscriberColumn" placeholder="العمود/الشارع">
+                </div>
+                <div class="form-group">
+                    <label for="subscriberZone">المنطقة/الحي</label>
+                    <input type="text" id="subscriberZone" placeholder="المنطقة/الحي">
+                </div>
+                <div class="form-group">
+                    <label for="taskTechnician">فني الصيانة</label>
+                    <select id="taskTechnician" required>
+                        <option value="">اختر فني صيانة</option>
+                        <option value="tech1">محمد أحمد - فني شبكات</option>
+                        <option value="tech2">علي سالم - فني صيانة</option>
+                        <option value="tech3">سارة خالد - فني أنظمة</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" id="cancelCreateTask">إلغاء</button>
+                    <button type="submit" class="btn primary">إنشاء المهمة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة عرض/تعديل المهمة -->
+    <div id="taskDetailsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تفاصيل المهمة</h2>
+                <button class="close-modal" id="closeTaskDetailsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="taskDetailsContent">
+                <!-- سيتم ملء هذا المحتوى ديناميكيًا باستخدام JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة ملاحظة -->
+    <div id="addNoteModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة ملاحظة</h2>
+                <button class="close-modal" id="closeAddNoteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addNoteForm">
+                <div class="form-group">
+                    <label for="noteText">نص الملاحظة</label>
+                    <textarea id="noteText" rows="4" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" id="cancelAddNote">إلغاء</button>
+                    <button type="submit" class="btn primary">إضافة الملاحظة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل المهام من التخزين المحلي
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+            // تحديث إحصائيات المهام
+            updateTaskStats();
+
+            // عرض المهام في الجدول
+            displayTasks();
+
+            // عرض المهام حسب الفريق
+            displayTasksByTeam();
+
+            // فلترة المهام عند تغيير الفلاتر
+            document.getElementById('taskTypeFilter').addEventListener('change', displayTasks);
+            document.getElementById('taskStatusFilter').addEventListener('change', displayTasks);
+            document.getElementById('teamFilter').addEventListener('change', displayTasks);
+            document.getElementById('subscriberNameFilter').addEventListener('input', displayTasks);
+            document.getElementById('subscriberPhoneFilter').addEventListener('input', displayTasks);
+            document.getElementById('subscriberColumnFilter').addEventListener('input', displayTasks);
+            document.getElementById('subscriberZoneFilter').addEventListener('input', displayTasks);
+
+            // فتح نافذة إنشاء المهمة
+            document.getElementById('createTaskBtn').addEventListener('click', function() {
+                document.getElementById('createTaskModal').classList.remove('hidden');
+            });
+
+            // إغلاق نافذة إنشاء المهمة
+            document.getElementById('closeCreateTaskModal').addEventListener('click', function() {
+                document.getElementById('createTaskModal').classList.add('hidden');
+            });
+
+            document.getElementById('cancelCreateTask').addEventListener('click', function() {
+                document.getElementById('createTaskModal').classList.add('hidden');
+            });
+
+            // إنشاء المهمة
+            document.getElementById('createTaskForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const newTask = {
+                    id: Date.now(),
+                    title: document.getElementById('taskTitle').value,
+                    description: document.getElementById('taskDescription').value,
+                    device: document.getElementById('taskDevice').value,
+                    location: document.getElementById('taskLocation').value,
+                    type: document.getElementById('taskType').value,
+                    priority: document.getElementById('taskPriority').value,
+                    team: document.getElementById('taskTeam').value,
+                    technician: document.getElementById('taskTechnician').value,
+                    deadline: document.getElementById('taskDeadline').value,
+                    estimatedTime: document.getElementById('taskEstimatedTime').value,
+                    tools: document.getElementById('taskTools').value,
+                    subscriberName: document.getElementById('subscriberName').value,
+                    subscriberPhone: document.getElementById('subscriberPhone').value,
+                    subscriberColumn: document.getElementById('subscriberColumn').value,
+                    subscriberZone: document.getElementById('subscriberZone').value,
+                    status: 'received',
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    notes: []
+                };
+
+                tasks.push(newTask);
+                saveTasks();
+
+                // إرسال إشعار للفني
+                sendNotificationToTechnician(newTask.technician, newTask.title);
+
+                // إعادة تعيين النموذج وإغلاق النافذة
+                document.getElementById('createTaskForm').reset();
+                document.getElementById('createTaskModal').classList.add('hidden');
+
+                // تحديث العرض
+                updateTaskStats();
+                displayTasks();
+                displayTasksByTeam();
+
+                // عرض رسالة نجاح
+                showMessage('تم إنشاء مهمة الصيانة بنجاح', 'success');
+            });
+
+            // تصدير المهام إلى Google Sheets
+            document.getElementById('exportTasksBtn').addEventListener('click', function() {
+                // هنا يمكنك إضافة منطق تصدير البيانات إلى Google Sheets
+                showMessage('سيتم تصدير البيانات إلى Google Sheets قريباً', 'info');
+            });
+
+            // إغلاق نافذة تفاصيل المهمة
+            document.getElementById('closeTaskDetailsModal').addEventListener('click', function() {
+                document.getElementById('taskDetailsModal').classList.add('hidden');
+            });
+
+            // إغلاق نافذة إضافة ملاحظة
+            document.getElementById('closeAddNoteModal').addEventListener('click', function() {
+                document.getElementById('addNoteModal').classList.add('hidden');
+            });
+
+            document.getElementById('cancelAddNote').addEventListener('click', function() {
+                document.getElementById('addNoteModal').classList.add('hidden');
+            });
+
+            // إضافة ملاحظة
+            document.getElementById('addNoteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const noteText = document.getElementById('noteText').value;
+                const currentTaskId = document.getElementById('addNoteForm').dataset.taskId;
+
+                const taskIndex = tasks.findIndex(task => task.id == currentTaskId);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex].notes.push({
+                        text: noteText,
+                        createdAt: new Date().toISOString()
+                    });
+
+                    tasks[taskIndex].updatedAt = new Date().toISOString();
+                    saveTasks();
+
+                    // إعادة تعيين النموذج وإغلاق النافذة
+                    document.getElementById('addNoteForm').reset();
+                    document.getElementById('addNoteModal').classList.add('hidden');
+
+                    // تحديث عرض تفاصيل المهمة
+                    displayTaskDetails(currentTaskId);
+
+                    // عرض رسالة نجاح
+                    showMessage('تم إضافة الملاحظة بنجاح', 'success');
+                }
+            });
+
+            // تحديث إحصائيات المهام
+            function updateTaskStats() {
+                const totalTasks = tasks.length;
+                const completedTasks = tasks.filter(task => task.status === 'completed').length;
+                const inProgressTasks = tasks.filter(task => task.status === 'in-progress').length;
+                const receivedTasks = tasks.filter(task => task.status === 'received').length;
+
+                document.getElementById('totalTasksCount').textContent = totalTasks;
+                document.getElementById('completedTasksCount').textContent = completedTasks;
+                document.getElementById('inProgressTasksCount').textContent = inProgressTasks;
+                document.getElementById('receivedTasksCount').textContent = receivedTasks;
+            }
+
+            // عرض المهام في الجدول
+            function displayTasks() {
+                const taskTypeFilter = document.getElementById('taskTypeFilter').value;
+                const taskStatusFilter = document.getElementById('taskStatusFilter').value;
+                const teamFilter = document.getElementById('teamFilter').value;
+                const subscriberNameFilter = document.getElementById('subscriberNameFilter').value.toLowerCase();
+                const subscriberPhoneFilter = document.getElementById('subscriberPhoneFilter').value.toLowerCase();
+                const subscriberColumnFilter = document.getElementById('subscriberColumnFilter').value.toLowerCase();
+                const subscriberZoneFilter = document.getElementById('subscriberZoneFilter').value.toLowerCase();
+
+                let filteredTasks = tasks;
+
+                if (taskTypeFilter !== 'all') {
+                    filteredTasks = filteredTasks.filter(task => task.type === taskTypeFilter);
+                }
+
+                if (taskStatusFilter !== 'all') {
+                    filteredTasks = filteredTasks.filter(task => task.status === taskStatusFilter);
+                }
+
+                if (teamFilter !== 'all') {
+                    filteredTasks = filteredTasks.filter(task => task.team === teamFilter);
+                }
+
+                // تصفية حسب اسم المشترك
+                if (subscriberNameFilter) {
+                    filteredTasks = filteredTasks.filter(task =>
+                        task.subscriberName && task.subscriberName.toLowerCase().includes(subscriberNameFilter)
+                    );
+                }
+
+                // تصفية حسب رقم الهاتف
+                if (subscriberPhoneFilter) {
+                    filteredTasks = filteredTasks.filter(task =>
+                        task.subscriberPhone && task.subscriberPhone.toLowerCase().includes(subscriberPhoneFilter)
+                    );
+                }
+
+                // تصفية حسب العمود/الشارع
+                if (subscriberColumnFilter) {
+                    filteredTasks = filteredTasks.filter(task =>
+                        task.subscriberColumn && task.subscriberColumn.toLowerCase().includes(subscriberColumnFilter)
+                    );
+                }
+
+                // تصفية حسب المنطقة/الحي
+                if (subscriberZoneFilter) {
+                    filteredTasks = filteredTasks.filter(task =>
+                        task.subscriberZone && task.subscriberZone.toLowerCase().includes(subscriberZoneFilter)
+                    );
+                }
+
+                const tbody = document.getElementById('tasksTableBody');
+                tbody.innerHTML = '';
+
+                filteredTasks.forEach(task => {
+                    const row = document.createElement('tr');
+
+                    // تحديد نوع المهمة
+                    let typeText = 'عادي';
+                    let typeClass = 'normal';
+                    if (task.type === 'important') {
+                        typeText = 'ضروري';
+                        typeClass = 'important';
+                    } else if (task.type === 'critical') {
+                        typeText = 'ضروري جداً';
+                        typeClass = 'critical';
+                    }
+
+                    // تحديد أولوية المهمة
+                    let priorityText = 'متوسطة';
+                    let priorityClass = 'medium';
+                    if (task.priority === 'high') {
+                        priorityText = 'عالية';
+                        priorityClass = 'high';
+                    } else if (task.priority === 'low') {
+                        priorityText = 'منخفضة';
+                        priorityClass = 'low';
+                    } else if (task.priority === 'critical') {
+                        priorityText = 'حرجة';
+                        priorityClass = 'critical';
+                    }
+
+                    // تحديد الجهاز
+                    let deviceText = task.device || 'غير محدد';
+                    if (deviceText === 'router') deviceText = 'راوتر';
+                    else if (deviceText === 'switch') deviceText = 'محول';
+                    else if (deviceText === 'server') deviceText = 'خادم';
+                    else if (deviceText === 'firewall') deviceText = 'جدار ناري';
+                    else if (deviceText === 'wireless') deviceText = 'شبكة لاسلكية';
+                    else if (deviceText === 'fiber') deviceText = 'ألياف ضوئية';
+                    else if (deviceText === 'other') deviceText = 'جهاز آخر';
+
+                    // تحديد حالة المهمة
+                    let statusText = 'تم الاستلام';
+                    let statusClass = 'received';
+                    if (task.status === 'in-progress') {
+                        statusText = 'قيد التنفيذ';
+                        statusClass = 'in-progress';
+                    } else if (task.status === 'completed') {
+                        statusText = 'منجز';
+                        statusClass = 'completed';
+                    }
+
+                    row.innerHTML = `
+                        <td>${task.title}</td>
+                        <td>${deviceText}</td>
+                        <td><span class="task-type ${task.priority}">${priorityText}</span></td>
+                        <td>${task.team}</td>
+                        <td>${new Date(task.createdAt).toLocaleDateString('ar-EG')}</td>
+                        <td><span class="status ${task.status}">${statusText}</span></td>
+                        <td>
+                            <button class="btn-icon" onclick="displayTaskDetails(${task.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" onclick="updateTaskStatus(${task.id})">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    `;
+
+                    tbody.appendChild(row);
+                });
+            }
+
+            // عرض المهام حسب الفريق
+            function displayTasksByTeam() {
+                const teamsContainer = document.querySelector('.teams-container');
+                teamsContainer.innerHTML = '';
+
+                // إنشاء بطاقات الفرق
+                ['team1', 'team2', 'team3'].forEach(teamId => {
+                    const teamTasks = tasks.filter(task => task.team === teamId);
+                    const teamCard = document.createElement('div');
+                    teamCard.className = 'team-card';
+
+                    // تحديد أسماء الفرق
+                    let teamName = 'الفريق 1';
+                    if (teamId === 'team2') teamName = 'الفريق 2';
+                    if (teamId === 'team3') teamName = 'الفريق 3';
+
+                    // حساب إحصائيات الفريق
+                    const teamCompletedTasks = teamTasks.filter(task => task.status === 'completed').length;
+                    const teamInProgressTasks = teamTasks.filter(task => task.status === 'in-progress').length;
+                    const teamReceivedTasks = teamTasks.filter(task => task.status === 'received').length;
+
+                    teamCard.innerHTML = `
+                        <div class="team-header">
+                            <h3>${teamName}</h3>
+                            <div class="team-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-tasks"></i>
+                                    ${teamTasks.length}
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    ${teamCompletedTasks}
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    ${teamInProgressTasks}
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    ${teamReceivedTasks}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="team-tasks">
+                            ${teamTasks.map(task => {
+                                let statusText = 'تم الاستلام';
+                                let statusClass = 'received';
+                                if (task.status === 'in-progress') {
+                                    statusText = 'قيد التنفيذ';
+                                    statusClass = 'in-progress';
+                                } else if (task.status === 'completed') {
+                                    statusText = 'منجز';
+                                    statusClass = 'completed';
+                                }
+
+                                return `
+                                    <div class="team-task">
+                                        <div class="task-info">
+                                            <h4>${task.title}</h4>
+                                            <p>${task.description.substring(0, 50)}...</p>
+                                        </div>
+                                        <div class="task-status">
+                                            <span class="status ${task.status}">${statusText}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+
+                    teamsContainer.appendChild(teamCard);
+                });
+            }
+
+            // عرض تفاصيل المهمة
+            function displayTaskDetails(taskId) {
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+
+                const taskDetailsContent = document.getElementById('taskDetailsContent');
+
+                // تحديد نوع المهمة
+                let typeText = 'عادي';
+                if (task.type === 'important') typeText = 'ضروري';
+                if (task.type === 'critical') typeText = 'ضروري جداً';
+
+                // تحديد حالة المهمة
+                let statusText = 'تم الاستلام';
+                let statusClass = 'received';
+                if (task.status === 'in-progress') {
+                    statusText = 'قيد التنفيذ';
+                    statusClass = 'in-progress';
+                } else if (task.status === 'completed') {
+                    statusText = 'منجز';
+                    statusClass = 'completed';
+                }
+
+                // تحديد اسم الفني
+                const technicianName = getTechnicianName(task.technician);
+
+                taskDetailsContent.innerHTML = `
+                    <div class="task-details">
+                        <div class="detail-row">
+                            <div class="detail-label">عنوان المهمة:</div>
+                            <div class="detail-value">${task.title}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">وصف المشكلة:</div>
+                            <div class="detail-value">${task.description || 'لا يوجد وصف'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الجهاز/المعدات:</div>
+                            <div class="detail-value">${getDeviceText(task.device)}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الموقع/القسم:</div>
+                            <div class="detail-value">${task.location || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">نوع المهمة:</div>
+                            <div class="detail-value"><span class="task-type ${task.type}">${getTaskTypeText(task.type)}</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الأولوية:</div>
+                            <div class="detail-value"><span class="task-type ${task.priority}">${getPriorityText(task.priority)}</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الفريق:</div>
+                            <div class="detail-value">${task.team}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">فني الصيانة:</div>
+                            <div class="detail-value">${technicianName}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">اسم المشترك:</div>
+                            <div class="detail-value">${task.subscriberName || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">رقم هاتف المشترك:</div>
+                            <div class="detail-value">${task.subscriberPhone || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">العمود/الشارع:</div>
+                            <div class="detail-value">${task.subscriberColumn || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">المنطقة/الحي:</div>
+                            <div class="detail-value">${task.subscriberZone || 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الوقت المقدر للإنجاز:</div>
+                            <div class="detail-value">${task.estimatedTime ? task.estimatedTime + ' ساعة' : 'غير محدد'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الأدوات/القطع المطلوبة:</div>
+                            <div class="detail-value">${task.tools || 'لا توجد أدوات محددة'}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">تاريخ الإنشاء:</div>
+                            <div class="detail-value">${new Date(task.createdAt).toLocaleString('ar-EG')}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الموعد النهائي:</div>
+                            <div class="detail-value">${new Date(task.deadline).toLocaleDateString('ar-EG')}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">الحالة:</div>
+                            <div class="detail-value"><span class="status ${statusClass}">${statusText}</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">آخر تحديث:</div>
+                            <div class="detail-value">${new Date(task.updatedAt).toLocaleString('ar-EG')}</div>
+                        </div>
+
+                        <div class="task-notes">
+                            <h3>الملاحظات</h3>
+                            <div class="notes-list">
+                                ${task.notes.length > 0 ? task.notes.map(note => `
+                                    <div class="note-item">
+                                        <div class="note-text">${note.text}</div>
+                                        <div class="note-date">${new Date(note.createdAt).toLocaleString('ar-EG')}</div>
+                                    </div>
+                                `).join('') : '<p>لا توجد ملاحظات بعد</p>'}
+                            </div>
+                            <button class="btn primary" id="addNoteBtn" data-task-id="${task.id}">
+                                <i class="fas fa-plus"></i> إضافة ملاحظة
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // إظهار نافذة التفاصيل
+                document.getElementById('taskDetailsModal').classList.remove('hidden');
+
+                // إضافة حدث لزر إضافة الملاحظة
+                document.getElementById('addNoteBtn').addEventListener('click', function() {
+                    document.getElementById('addNoteModal').classList.remove('hidden');
+                    document.getElementById('addNoteForm').dataset.taskId = task.id;
+                });
+            }
+
+            // تحديث حالة المهمة
+            function updateTaskStatus(taskId) {
+                const task = tasks.find(t => t.id === taskId);
+                if (!task) return;
+
+                let newStatus = '';
+                let statusText = '';
+
+                if (task.status === 'received') {
+                    newStatus = 'in-progress';
+                    statusText = 'قيد التنفيذ';
+                } else if (task.status === 'in-progress') {
+                    newStatus = 'completed';
+                    statusText = 'منجز';
+                } else {
+                    return; // لا يمكن تغيير الحالة إذا كانت منجزة بالفعل
+                }
+
+                task.status = newStatus;
+                task.updatedAt = new Date().toISOString();
+
+                saveTasks();
+
+                // تحديث العرض
+                updateTaskStats();
+                displayTasks();
+                displayTasksByTeam();
+
+                // عرض رسالة نجاح
+                showMessage(`تم تحديث حالة المهمة إلى "${statusText}"`, 'success');
+            }
+
+            // حفظ المهام في التخزين المحلي
+            function saveTasks() {
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+
+                // حفظ نسخة من المهام لمدة يومين
+                const tasksBackup = {
+                    tasks: tasks,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('tasksBackup', JSON.stringify(tasksBackup));
+            }
+
+            // الحصول على اسم العضو من المعرف
+            function getMemberName(memberId) {
+                const members = {
+                    'ahmed': 'أحمد محمد',
+                    'ali': 'علي سالم',
+                    'sara': 'سارة أحمد',
+                    'fatima': 'فاطمة خالد',
+                    'youssef': 'يوسف أحمد',
+                    'nour': 'نور الدين'
+                };
+
+                return members[memberId] || memberId;
+            }
+
+            // الحصول على نص الجهاز من المعرف
+            function getDeviceText(deviceId) {
+                const devices = {
+                    'router': 'راوتر',
+                    'switch': 'محول',
+                    'server': 'خادم',
+                    'firewall': 'جدار ناري',
+                    'wireless': 'شبكة لاسلكية',
+                    'fiber': 'ألياف ضوئية',
+                    'other': 'جهاز آخر'
+                };
+                return devices[deviceId] || deviceId;
+            }
+
+            // الحصول على نص نوع المهمة من المعرف
+            function getTaskTypeText(typeId) {
+                const types = {
+                    'maintenance': 'صيانة روتينية',
+                    'troubleshooting': 'حل مشكلة',
+                    'installation': 'تركيب',
+                    'upgrade': 'تحديث',
+                    'configuration': 'إعدادات'
+                };
+                return types[typeId] || typeId;
+            }
+
+            // الحصول على نص الأولوية من المعرف
+            function getPriorityText(priorityId) {
+                const priorities = {
+                    'low': 'منخفضة',
+                    'medium': 'متوسطة',
+                    'high': 'عالية',
+                    'critical': 'حرجة'
+                };
+                return priorities[priorityId] || priorityId;
+            }
+            
+            // الحصول على دور المستخدم
+            function getUserRole(userId) {
+                // في نظام حقيقي، سيتم جلب هذا من قاعدة البيانات
+                const userRoles = {
+                    'admin1': 'admin',
+                    'tech1': 'technician',
+                    'tech2': 'technician',
+                    'tech3': 'technician'
+                };
+                return userRoles[userId] || 'user';
+            }
+            
+            // التحقق من صلاحيات المستخدم
+            function checkUserPermissions(role, action) {
+                const permissions = {
+                    'admin': ['create_task', 'assign_task', 'view_all_tasks', 'update_task_status'],
+                    'technician': ['view_assigned_tasks', 'update_task_status'],
+                    'user': ['view_assigned_tasks']
+                };
+                return permissions[role] && permissions[role].includes(action);
+            }
+            
+            // الحصول على اسم الفني من المعرف
+            function getTechnicianName(technicianId) {
+                const technicians = {
+                    'tech1': 'محمد أحمد - فني شبكات',
+                    'tech2': 'علي سالم - فني صيانة',
+                    'tech3': 'سارة خالد - فني أنظمة'
+                };
+                return technicians[technicianId] || technicianId;
+            }
+            
+            // إرسال إشعار للفني
+            function sendNotificationToTechnician(technicianId, taskTitle) {
+                // في نظام حقيقي، سيتم إرسال إشعار فعلي إلى الفني
+                // هنا نقوم فقط بعرض رسالة في واجهة المشرف
+                showMessage(`تم إرسال مهمة "${taskTitle}" إلى الفني ${getTechnicianName(technicianId)}`, 'info');
+                
+                // تحديث عدد الإشعارات في شريط التنقل
+                const notificationCount = document.querySelector('.notification-count');
+                if (notificationCount) {
+                    const currentCount = parseInt(notificationCount.textContent) || 0;
+                    notificationCount.textContent = currentCount + 1;
+                }
+            }
+            
+            // عرض رسالة
+            function showMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.textContent = message;
+ 
+                document.body.appendChild(messageDiv);
+ 
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 500);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم داخلي - نظام الحضور</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .attendance-interface {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .attendance-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .attendance-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .current-time {
+            font-size: 18px;
+            color: var(--gray-color);
+            font-weight: 500;
+        }
+
+        .attendance-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .location-status {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-width: 200px;
+        }
+
+        .status-item i {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .status-item.ready i {
+            color: var(--success-color);
+        }
+
+        .status-item.error i {
+            color: var(--danger-color);
+        }
+
+        .fingerprint-section {
+            text-align: center;
+        }
+
+        .fingerprint-device {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            display: inline-block;
+            min-width: 300px;
+        }
+
+        .fingerprint-icon {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .fingerprint-status {
+            font-size: 16px;
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+
+        .fingerprint-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .fingerprint-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .fingerprint-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .attendance-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        .info-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-card li {
+            padding: 5px 0;
+            color: var(--gray-color);
+        }
+
+        .attendance-log {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .attendance-log h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .attendance-table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .attendance-table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .attendance-table th {
+            padding: 15px 20px;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .attendance-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .attendance-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .attendance-table tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .attendance-stats {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .attendance-stats h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 15px;
+            font-size: 24px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stat-icon {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(67, 97, 238, 0.05));
+            color: var(--primary-color);
+        }
+
+        .stat-info h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .stat-info p {
+            color: var(--gray-color);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .attendance-content {
+                grid-template-columns: 1fr;
+            }
+
+            .location-status {
+                flex-direction: column;
+            }
+
+            .status-item {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>مرحباً بك</h1>
+                    <p>تسجيل الدخول إلى حسابك</p>
+                </div>
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-user icon"></i>
+                            <input type="text" id="username" placeholder="اسم المستخدم" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-lock icon"></i>
+                            <input type="password" id="password" placeholder="كلمة المرور" required>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>تذكرني</span>
+                        </label>
+                        <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+                    <button type="submit" class="login-btn">تسجيل الدخول</button>
+                    <div class="login-footer">
+                        <p>ليس لديك حساب؟ <a href="#" id="showRegister">سجل الآن</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة التطبيق الرئيسية -->
+    <div id="appScreen" class="screen hidden">
+        <!-- شريط التنقل العلوي -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <h2>نظام الحضور</h2>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/user-avatar.png" alt="صورة المستخدم">
+                    <span id="userName">اسم المستخدم</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>تصميم داخلي</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="../index.html" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tasks.html" data-page="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>المشاريع</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#" data-page="attendance">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>تسجيل الحضور</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات والتقارير</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- محتوى التطبيق -->
+        <main class="main-content">
+            <!-- صفحة تسجيل الحضور -->
+            <div id="housePage" class="page active">
+                <div class="page-header">
+                    <h1>نظام تسجيل الحضور</h1>
+                    <div class="page-actions">
+                        <button class="btn" id="viewAttendanceBtn"><i class="fas fa-eye"></i> عرض سجل الحضور</button>
+                        <button class="btn primary" id="exportAttendanceBtn"><i class="fas fa-file-export"></i> تصدير التقرير</button>
+                    </div>
+                </div>
+
+                <!-- واجهة تسجيل الحضور -->
+                <div class="attendance-interface">
+                    <div class="attendance-header">
+                        <h2>تسجيل الحضور بالبصمة</h2>
+                        <div class="current-time" id="currentTime">الوقت الحالي: --:--:--</div>
+                    </div>
+                    <div class="attendance-content">
+                        <div class="location-status">
+                            <div class="status-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="locationStatus">جاري التحقق من الموقع...</span>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="timeStatus">جاري التحقق من الوقت...</span>
+                            </div>
+                        </div>
+                        <div class="fingerprint-section">
+                            <div class="fingerprint-device" id="fingerprintDevice">
+                                <div class="fingerprint-icon">
+                                    <i class="fas fa-fingerprint"></i>
+                                </div>
+                                <div class="fingerprint-status" id="fingerprintStatus">
+                                    اضغط لتسجيل البصمة
+                                </div>
+                                <button class="fingerprint-btn" id="fingerprintBtn" disabled>
+                                    <i class="fas fa-hand-paper"></i>
+                                    تسجيل البصمة
+                                </button>
+                            </div>
+                        </div>
+                        <div class="attendance-info">
+                            <div class="info-card">
+                                <h4>ساعات العمل</h4>
+                                <p>تسجيل الحضور متاح:</p>
+                                <ul>
+                                    <li>بعد الساعة 4:00 مساءً (تسجيل الخروج)</li>
+                                    <li>بعد الساعة 11:00 مساءً (تسجيل حضور إضافي)</li>
+                                </ul>
+                            </div>
+                            <div class="info-card">
+                                <h4>الموقع المطلوب</h4>
+                                <p>يجب أن تكون في الموقع:</p>
+                                <p><strong>33.4033378, 44.3571241</strong></p>
+                                <p>لتنشيط ميزة البصمة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- سجل الحضور -->
+                <div class="attendance-log">
+                    <h3>سجل الحضور اليومي</h3>
+                    <div class="attendance-table-container">
+                        <table class="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>وقت تسجيل الدخول</th>
+                                    <th>وقت تسجيل الخروج</th>
+                                    <th>وقت إضافي</th>
+                                    <th>الموقع</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceTableBody">
+                                <!-- سيتم ملء هذا الجدول ديناميكيًا باستخدام JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- إحصائيات الحضور -->
+                <div class="attendance-stats">
+                    <h3>إحصائيات الحضور</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="totalDays">0</h4>
+                                <p>إجمالي أيام الحضور</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="totalHours">0</h4>
+                                <p>إجمالي ساعات العمل</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="attendanceRate">0%</h4>
+                                <p>معدل الحضور</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4 id="overtimeHours">0</h4>
+                                <p>ساعات إضافية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة عرض تفاصيل الحضور -->
+    <div id="attendanceDetailsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تفاصيل الحضور</h2>
+                <button class="close-modal" id="closeAttendanceDetailsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="attendanceDetailsContent">
+                <!-- سيتم ملء هذا المحتوى ديناميكيًا باستخدام JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // متغيرات النظام
+            let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+            let currentLocation = null;
+            let locationCheckInterval = null;
+            let timeCheckInterval = null;
+
+            // إعدادات الموقع المطلوب
+            const REQUIRED_LAT = 33.4033378;
+            const REQUIRED_LNG = 44.3571241;
+            const LOCATION_TOLERANCE = 0.001; // تحمل 100 متر تقريباً
+
+            // تهيئة النظام
+            initializeAttendanceSystem();
+
+            function initializeAttendanceSystem() {
+                updateCurrentTime();
+                checkLocationPermission();
+                checkTimeRestrictions();
+                displayAttendanceRecords();
+                updateAttendanceStats();
+
+                // تحديث الوقت كل ثانية
+                timeCheckInterval = setInterval(updateCurrentTime, 1000);
+
+                // التحقق من القيود الزمنية كل دقيقة
+                setInterval(checkTimeRestrictions, 60000);
+            }
+
+            function updateCurrentTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ar-SA', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('currentTime').textContent = `الوقت الحالي: ${timeString}`;
+            }
+
+            function checkLocationPermission() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            currentLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            checkLocationMatch();
+                        },
+                        function(error) {
+                            updateLocationStatus('خطأ في الوصول للموقع: ' + error.message, 'error');
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 300000
+                        }
+                    );
+
+                    // مراقبة تغيير الموقع
+                    locationCheckInterval = navigator.geolocation.watchPosition(
+                        function(position) {
+                            currentLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            checkLocationMatch();
+                        },
+                        function(error) {
+                            console.log('خطأ في مراقبة الموقع:', error);
+                        }
+                    );
+                } else {
+                    updateLocationStatus('المتصفح لا يدعم تحديد الموقع', 'error');
+                }
+            }
+
+            function checkLocationMatch() {
+                if (!currentLocation) return;
+
+                const distance = getDistance(currentLocation.lat, currentLocation.lng, REQUIRED_LAT, REQUIRED_LNG);
+
+                if (distance <= LOCATION_TOLERANCE) {
+                    updateLocationStatus('أنت في الموقع الصحيح ✓', 'ready');
+                } else {
+                    updateLocationStatus(`أنت خارج نطاق الموقع (${distance.toFixed(3)} كم)`, 'error');
+                }
+            }
+
+            function updateLocationStatus(message, status) {
+                const locationStatus = document.getElementById('locationStatus');
+                locationStatus.textContent = message;
+                locationStatus.className = status;
+            }
+
+            function checkTimeRestrictions() {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+
+                let isAllowedTime = false;
+                let timeMessage = '';
+
+                if (currentHour >= 16) { // بعد 4 مساءً
+                    isAllowedTime = true;
+                    timeMessage = 'متاح لتسجيل الخروج بعد 4 مساءً ✓';
+                } else if (currentHour >= 23 || (currentHour === 23 && currentMinute >= 0)) { // بعد 11 مساءً
+                    isAllowedTime = true;
+                    timeMessage = 'متاح لتسجيل حضور إضافي بعد 11 مساءً ✓';
+                } else {
+                    timeMessage = 'غير متاح - يجب الانتظار حتى 4 مساءً أو 11 مساءً';
+                }
+
+                updateTimeStatus(timeMessage, isAllowedTime ? 'ready' : 'error');
+
+                // تفعيل/تعطيل زر البصمة
+                const fingerprintBtn = document.getElementById('fingerprintBtn');
+                const isLocationValid = currentLocation &&
+                    getDistance(currentLocation.lat, currentLocation.lng, REQUIRED_LAT, REQUIRED_LNG) <= LOCATION_TOLERANCE;
+
+                fingerprintBtn.disabled = !(isAllowedTime && isLocationValid);
+            }
+
+            function updateTimeStatus(message, status) {
+                const timeStatus = document.getElementById('timeStatus');
+                timeStatus.textContent = message;
+                timeStatus.className = status;
+            }
+
+            function getDistance(lat1, lng1, lat2, lng2) {
+                const R = 6371; // نصف قطر الأرض بالكيلومتر
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLng = (lng2 - lng1) * Math.PI / 180;
+                const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                         Math.sin(dLng/2) * Math.sin(dLng/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                return R * c;
+            }
+
+            // إضافة حدث لزر البصمة
+            document.getElementById('fingerprintBtn').addEventListener('click', function() {
+                recordAttendance();
+            });
+
+            function recordAttendance() {
+                const now = new Date();
+                const attendanceRecord = {
+                    id: Date.now(),
+                    date: now.toISOString().split('T')[0],
+                    time: now.toTimeString().split(' ')[0],
+                    timestamp: now.toISOString(),
+                    location: currentLocation,
+                    type: getAttendanceType(now),
+                    status: 'recorded'
+                };
+
+                attendanceRecords.push(attendanceRecord);
+                saveAttendanceRecords();
+
+                displayAttendanceRecords();
+                updateAttendanceStats();
+
+                showMessage('تم تسجيل الحضور بنجاح ✓', 'success');
+
+                // إعادة تعيين حالة زر البصمة
+                setTimeout(() => {
+                    checkTimeRestrictions();
+                }, 5000);
+            }
+
+            function getAttendanceType(dateTime) {
+                const hour = dateTime.getHours();
+                if (hour >= 23 || hour < 6) {
+                    return 'overtime';
+                } else if (hour >= 16) {
+                    return 'checkout';
+                } else {
+                    return 'regular';
+                }
+            }
+
+            function saveAttendanceRecords() {
+                localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+            }
+
+            function displayAttendanceRecords() {
+                const tbody = document.getElementById('attendanceTableBody');
+                tbody.innerHTML = '';
+
+                // الحصول على سجلات اليوم
+                const today = new Date().toISOString().split('T')[0];
+                const todayRecords = attendanceRecords.filter(record => record.date === today);
+
+                if (todayRecords.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">لا توجد سجلات حضور اليوم</td></tr>';
+                    return;
+                }
+
+                todayRecords.forEach(record => {
+                    const row = document.createElement('tr');
+
+                    const typeText = getAttendanceTypeText(record.type);
+                    const locationText = record.location ?
+                        `${record.location.lat.toFixed(6)}, ${record.location.lng.toFixed(6)}` :
+                        'غير محدد';
+
+                    row.innerHTML = `
+                        <td>${record.date}</td>
+                        <td>${record.time}</td>
+                        <td>${record.type === 'checkout' ? record.time : '-'}</td>
+                        <td>${record.type === 'overtime' ? record.time : '-'}</td>
+                        <td>${locationText}</td>
+                        <td><span class="status recorded">${typeText}</span></td>
+                    `;
+
+                    tbody.appendChild(row);
+                });
+            }
+
+            function getAttendanceTypeText(type) {
+                switch(type) {
+                    case 'checkout': return 'خروج';
+                    case 'overtime': return 'إضافي';
+                    case 'regular': return 'عادي';
+                    default: return 'غير محدد';
+                }
+            }
+
+            function updateAttendanceStats() {
+                const today = new Date().toISOString().split('T')[0];
+                const todayRecords = attendanceRecords.filter(record => record.date === today);
+
+                // إجمالي أيام الحضور
+                const uniqueDays = [...new Set(attendanceRecords.map(record => record.date))].length;
+                document.getElementById('totalDays').textContent = uniqueDays;
+
+                // إجمالي ساعات العمل (محسوبة تقريباً)
+                const workHours = calculateWorkHours(todayRecords);
+                document.getElementById('totalHours').textContent = workHours.toFixed(1);
+
+                // معدل الحضور (افتراضي 100% للأيام المسجلة)
+                const attendanceRate = uniqueDays > 0 ? ((uniqueDays / 30) * 100).toFixed(1) : 0;
+                document.getElementById('attendanceRate').textContent = attendanceRate + '%';
+
+                // ساعات إضافية
+                const overtimeRecords = todayRecords.filter(record => record.type === 'overtime').length;
+                document.getElementById('overtimeHours').textContent = overtimeRecords;
+            }
+
+            function calculateWorkHours(records) {
+                // حساب تقريبي لساعات العمل
+                let totalHours = 0;
+                records.forEach(record => {
+                    if (record.type === 'checkout') {
+                        totalHours += 8; // افتراض 8 ساعات عمل
+                    } else if (record.type === 'overtime') {
+                        totalHours += 2; // ساعتين إضافيتين
+                    }
+                });
+                return totalHours;
+            }
+
+            // إضافة أحداث للأزرار
+            document.getElementById('viewAttendanceBtn').addEventListener('click', function() {
+                displayAttendanceRecords();
+                showMessage('تم تحديث سجل الحضور', 'info');
+            });
+
+            document.getElementById('exportAttendanceBtn').addEventListener('click', function() {
+                exportAttendanceData();
+            });
+
+            function exportAttendanceData() {
+                // تصدير بيانات الحضور إلى CSV
+                let csvContent = 'التاريخ,الوقت,النوع,الموقع\n';
+
+                attendanceRecords.forEach(record => {
+                    const locationText = record.location ?
+                        `${record.location.lat},${record.location.lng}` : 'غير محدد';
+                    csvContent += `${record.date},${record.time},${getAttendanceTypeText(record.type)},${locationText}\n`;
+                });
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'سجل_الحضور.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showMessage('تم تصدير سجل الحضور بنجاح', 'success');
+            }
+
+            // إغلاق نافذة تفاصيل الحضور
+            document.getElementById('closeAttendanceDetailsModal').addEventListener('click', function() {
+                document.getElementById('attendanceDetailsModal').classList.add('hidden');
+            });
+
+            function showMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.textContent = message;
+
+                document.body.appendChild(messageDiv);
+
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 500);
+                }, 3000);
+            }
+
+            // تنظيف الموارد عند إغلاق الصفحة
+            window.addEventListener('beforeunload', function() {
+                if (locationCheckInterval) {
+                    navigator.geolocation.clearWatch(locationCheckInterval);
+                }
+                if (timeCheckInterval) {
+                    clearInterval(timeCheckInterval);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
